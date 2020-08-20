@@ -23,7 +23,7 @@ install_nginx(){
 
     systemctl stop firewalld
     systemctl disable firewalld
-    apt install -y build-essential libpcre3 libpcre3-dev zlib1g-dev liblua5.1-dev libluajit-5.1-dev libgeoip-dev google-perftools libgoogle-perftools-dev gcc autoconf automake make
+    apt install -y build-essential libpcre3 libpcre3-dev zlib1g-dev liblua5.1-dev libluajit-5.1-dev libgeoip-dev google-perftools libgoogle-perftools-dev gcc autoconf automake make cron
     wget https://www.openssl.org/source/openssl-1.1.1a.tar.gz
     tar xzvf openssl-1.1.1a.tar.gz
     mkdir /etc/nginx
