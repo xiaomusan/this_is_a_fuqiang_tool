@@ -226,7 +226,6 @@ start_menu(){
     green " 2. 升级 v2ray "
     red " 3. 卸载 v2ray 与 nginx "
     red " 4. 仅卸载 v2ray "
-    yellow " 5. 仅安装 v2ray "
     yellow " 0. 退出脚本"
     echo
     read -p "请输入数字:" num
@@ -243,9 +242,6 @@ start_menu(){
     ;;
     4)
     bash <(curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh) --remove
-    ;;
-    5)
-    install_v2ray
     ;;
     0)
     exit 1
