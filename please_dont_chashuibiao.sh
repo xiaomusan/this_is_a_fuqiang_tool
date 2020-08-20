@@ -1,4 +1,5 @@
 #!/bin/bash
+#Thanks for atrandys !
 #判断系统
 if [ ! -e '/etc/redhat-release' ]; then
 echo "仅支持centos7"
@@ -254,5 +255,6 @@ start_menu(){
     ;;
     esac
 }
+# Thanks for atrandys !
 
 start_menu
