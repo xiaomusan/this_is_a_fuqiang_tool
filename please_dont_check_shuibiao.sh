@@ -1,6 +1,5 @@
 #!/bin/bash
 #Thanks for atrandys !
-#判断系统
 function blue(){
     echo -e "\033[34m\033[01m $1 \033[0m"
 }
@@ -17,9 +16,14 @@ function yellow(){
 
 #安装nginx
 install_nginx(){
+    green "======================"
+    green " 输入解析到此VPS的域名"
+    green "======================"
+    read domain
+
     systemctl stop firewalld
     systemctl disable firewalld
-    sudo apt install -y build-essential libpcre3 libpcre3-dev zlib1g-dev liblua5.1-dev libluajit-5.1-dev libgeoip-dev google-perftools libgoogle-perftools-dev unzip
+    apt install -y build-essential libpcre3 libpcre3-dev zlib1g-dev liblua5.1-dev libluajit-5.1-dev libgeoip-dev google-perftools libgoogle-perftools-dev gcc autoconf automake make
     wget https://www.openssl.org/source/openssl-1.1.1a.tar.gz
     tar xzvf openssl-1.1.1a.tar.gz
     mkdir /etc/nginx
@@ -30,12 +34,7 @@ install_nginx(){
     cd nginx-1.15.8
     ./configure --prefix=/etc/nginx --with-openssl=../openssl-1.1.1a --with-openssl-opt='enable-tls1_3' --with-http_v2_module --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with-http_sub_module --with-stream --with-stream_ssl_module
     make && make install
-    
-    green "======================"
-    green " 输入解析到此VPS的域名"
-    green "======================"
-    read domain
-    
+
 cat > /etc/nginx/conf/nginx.conf <<-EOF
 user  root;
 worker_processes  1;
@@ -194,6 +193,7 @@ remove_v2ray(){
     rm -rf /usr/bin/v2ray /usr/local/etc/v2ray
     rm -rf /usr/local/etc/v2ray
     rm -rf /etc/nginx
+    rm -rf /etc/profile.d/auto_run_nginx.sh
     
     green "nginx、v2ray已删除"
     
