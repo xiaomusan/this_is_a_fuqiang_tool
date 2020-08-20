@@ -144,7 +144,7 @@ install_v2ray(){
     
     yum install -y wget
     cd ~
-    bash <(curl -O https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)  
+    bash <(curl -s https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)  
     cd /usr/local/etc/v2ray/
     rm -f config.json
     wget https://raw.githubusercontent.com/X1A0CA1/this_is_a_fuqiang_tool/master/config.json
