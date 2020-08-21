@@ -24,7 +24,7 @@ install_nginx(){
     systemctl stop firewalld
     systemctl disable firewalld
     apt update -y
-    apt install -y build-essential libpcre3 libpcre3-dev zlib1g-dev liblua5.1-dev libluajit-5.1-dev libgeoip-dev google-perftools libgoogle-perftools-dev gcc autoconf automake make cron
+    apt install -y build-essential libpcre3 libpcre3-dev zlib1g-dev liblua5.1-dev libluajit-5.1-dev libgeoip-dev google-perftools libgoogle-perftools-dev gcc autoconf automake make cron sysv-rc-conf
     wget https://www.openssl.org/source/openssl-1.1.1a.tar.gz
     tar xzvf openssl-1.1.1a.tar.gz
     mkdir /etc/nginx
@@ -142,16 +142,18 @@ install_v2ray(){
     unzip web.zip
     /etc/nginx/sbin/nginx -s stop
     /etc/nginx/sbin/nginx
-    systemctl restart v2ray.service
     
     #增加自启动脚本
-cat > /etc/profile.d/auto_run_nginx.sh<<-EOF
+cat > /etc/init.d/auto_run_nginx.sh<<-EOF
 #!/bin/sh -e
 /etc/nginx/sbin/nginx
 EOF
 
     #设置脚本权限
-    chmod +x /etc/profile.d/auto_run_nginx.sh
+    chmod +x /etc/init.d/auto_run_nginx.sh
+    #添加 v2ray 自启动
+    systemctl enable v2ray
+    systemctl restart v2ray
 
 cat > /usr/local/etc/v2ray/myconfig.json<<-EOF
 {
@@ -188,13 +190,13 @@ green
 remove_v2ray(){
 
     /etc/nginx/sbin/nginx -s stop
-    systemctl stop v2ray.service
-    systemctl disable v2ray.service
+    systemctl stop v2ray
+    systemctl disable v2ray
     
     rm -rf /usr/bin/v2ray /usr/local/etc/v2ray
     rm -rf /usr/local/etc/v2ray
     rm -rf /etc/nginx
-    rm -rf /etc/profile.d/auto_run_nginx.sh
+    rm -rf /etc/init.d/auto_run_nginx.sh
     
     green "nginx、v2ray已删除"
     
